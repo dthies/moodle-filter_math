@@ -97,7 +97,7 @@ class filter_math extends moodle_text_filter {
                     $text .= $children->item($i)->nodeValue;
             }
         }
-        if (!preg_match_all('/' . $this->pattern . '/', $text, $matches, PREG_OFFSET_CAPTURE)) {
+        if (!preg_match_all('/' . $this->pattern . '/s', $text, $matches, PREG_OFFSET_CAPTURE)) {
             return;
         }
         $endtext = strlen($text);
@@ -126,7 +126,7 @@ class filter_math extends moodle_text_filter {
                     $child->nextSibling->nodeValue = $child->nextSibling->nodeValue;
                     $container->insertBefore($child->nextSibling, $container->firstChild);
                     foreach ($this->delimiters as $d) {
-                        if (preg_match('/^' . preg_quote($d[0]) . '(.+?)' . preg_quote($d[1]) . '$/', $container->nodeValue)) {
+                        if (preg_match('/^' . preg_quote($d[0]) . '(.+?)' . preg_quote($d[1]) . '$/s', $container->nodeValue)) {
                             $container->setAttribute('class', 'local-math-' . $d[2]);
                             $container->firstChild->nodeValue = preg_replace(
                                 '/^' .  preg_quote($d[0]) . '/', '',
